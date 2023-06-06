@@ -17,6 +17,7 @@ parser.add_argument("--output_path", type=str, default="output", help="folder pa
 parser.add_argument("--model_path", help="trained model folder path (used in eval, predict and export mode)")
 parser.add_argument("--epoch", help="epochs to restore (used in eval, predict and export mode)")
 parser.add_argument("--gpu", type=str, default=None, help="gpu id")
+parser.add_argument("--batch_per_print", type=int, default=None, help="Print results every X batches")
 parser.add_argument("--note", type=str)
 
 args = parser.parse_args()
@@ -70,7 +71,7 @@ if args.job == "train":
             cur_loss = model.train_on_batch(batch)
             loss_avg = (loss_avg * step + cur_loss) / (step + 1)
             step += 1
-            if batch_id % 100 == 0:
+            if batch_id % args.batch_per_print == 0:
                 currentDT = datetime.datetime.now()
                 print("[{3}] epoch {0}, batch {1}, batch_loss={2:.4f}".format(epoch, batch_id, cur_loss,
                                                                                 currentDT.strftime("%m-%d %H:%M:%S")))
