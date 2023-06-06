@@ -12,7 +12,7 @@ class HydraTorch(BaseModel):
         self.model = HydraNet(config)
         if torch.cuda.device_count() > 1:
             self.model = nn.DataParallel(self.model)
-        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
 
         self.optimizer, self.scheduler = None, None
