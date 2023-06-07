@@ -35,6 +35,7 @@ if args.job == "train":
     output_path = args.output_path
     model_name = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     model_path = os.path.join(output_path, model_name)
+    print("Trained models will be saved at", model_path)
 
     if "DEBUG" not in config:
         if not os.path.exists(output_path):
