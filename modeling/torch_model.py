@@ -28,7 +28,8 @@ class HydraTorch(BaseModel):
                 {"params": [p for n, p in self.model.named_parameters() if any(nd in n for nd in no_decay)],
                  "weight_decay": 0.0},
             ]
-            self.optimizer = transformers.AdamW(optimizer_grouped_parameters, lr=float(self.config["learning_rate"]))
+            # self.optimizer = transformers.AdamW(optimizer_grouped_parameters, lr=float(self.config["learning_rate"]))
+            self.optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=float(self.config["learning_rate"]))
             self.scheduler = transformers.get_cosine_schedule_with_warmup(
                 self.optimizer,
                 num_warmup_steps=int(self.config["num_warmup_steps"]),
