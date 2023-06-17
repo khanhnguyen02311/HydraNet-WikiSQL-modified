@@ -1,3 +1,4 @@
+import argparse
 import os
 import json
 import pickle
@@ -5,6 +6,15 @@ import utils
 from modeling.model_factory import create_model
 from featurizer import HydraFeaturizer, SQLDataset
 from wikisql_lib.dbengine import DBEngine
+
+
+parser = argparse.ArgumentParser(description='HydraNet prediction scrpit')
+parser.add_argument("--output_path", type=str, default="output", help="current output folder path")
+parser.add_argument("--checkpoint_time", type=str, help="checkpoint time of the model")
+parser.add_argument("--epoch", type=int, default=1, help="model epoch that you want to get result")
+
+args = parser.parse_args()
+
 
 def print_metric(label_file, pred_file):
     sp = [(json.loads(ls)["sql"], json.loads(lp)["query"]) for ls, lp in zip(open(label_file), open(pred_file))]
@@ -44,14 +54,15 @@ if __name__ == "__main__":
     # model_out_file = "output/dev_model_out.pkl"
 
     in_file = "data/wikitest.jsonl"
-    out_file = "output/test_out.jsonl"
     label_file = "WikiSQL/data/test.jsonl"
     db_file = "WikiSQL/data/test.db"
-    model_out_file = "output/test_model_out.pkl"
+    
+    out_file = os.path.join(args.output_path, "test_out.jsonl")
+    model_out_file = os.path.join(args.output_path, "test_model_out.pkl")
 
     # All Best
-    model_path = "output/20200207_105347"
-    epoch = 4
+    model_path = os.path.join(args.output_path, args.checkpoint_time)
+    epoch = args.epoch
 
     engine = DBEngine(db_file)
     config = utils.read_conf(os.path.join(model_path, "model.conf"))
