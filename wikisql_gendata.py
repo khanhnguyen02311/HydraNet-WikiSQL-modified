@@ -140,7 +140,9 @@ class SQLExample(object):
             cond_texts.append(column_text + op_text + value_text)
 
         if return_str:
-            sq = agg_text + ", " + select_text + ", " + " AND ".join(cond_texts)
+            if agg_text == "NA": agg_text = ""
+            sq = "SELECT " + agg_text + "(" + select_text + ")" + " FROM " + self.table_id + " WHERE " + " AND ".join(cond_texts)
+            # sq = agg_text + ", " + select_text + ", " + " AND ".join(cond_texts)
         else:
             sq = (agg_text, select_text, set(cond_texts))
         return sq
@@ -202,9 +204,9 @@ if __name__ == "__main__":
                     sql["agg"],
                     int(sql["sel"]),
                     [(int(cond[0]), cond[1], str(cond[2])) for cond in sql["conds"]])
-
+                
                 f.write(example.dump_to_json() + "\n")
                 cnt += 1
 
-                # if cnt % 1000 == 0 and cnt > 0:
-                #     print(cnt)
+                if cnt % 1000 == 0 and cnt > 0:
+                    print(example.output_SQ())

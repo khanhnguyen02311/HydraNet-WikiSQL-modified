@@ -14,7 +14,7 @@ parser.add_argument("job", type=str, choices=["train"],
                     help="job can be train")
 parser.add_argument("--conf", help="conf file path")
 parser.add_argument("--output_path", type=str, default="output", help="folder path for all outputs")
-parser.add_argument("--model_path", help="trained model folder path (used in eval, predict and export mode)")
+parser.add_argument("--model_path", help="trained model folder path (used in eval, predict and export model)")
 parser.add_argument("--epoch", help="epochs to restore (used in eval, predict and export mode)")
 parser.add_argument("--gpu", type=str, default=None, help="gpu id")
 parser.add_argument("--batch_per_print", type=int, default=None, help="Print results every X batches")

@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser(description='HydraNet prediction scrpit')
 parser.add_argument("--output_path", type=str, default="output", help="current output folder path")
 parser.add_argument("--checkpoint_time", type=str, help="checkpoint time of the model")
 parser.add_argument("--epoch", type=int, default=1, help="model epoch that you want to get result")
+parser.add_argument("--dataset_type", type=str, default="test", help="evaluation on ['dev', 'test']")
 
 args = parser.parse_args()
 
@@ -52,13 +53,13 @@ if __name__ == "__main__":
     # label_file = "WikiSQL/data/dev.jsonl"
     # db_file = "WikiSQL/data/dev.db"
     # model_out_file = "output/dev_model_out.pkl"
-
-    in_file = "data/wikitest.jsonl"
-    label_file = "WikiSQL/data/test.jsonl"
-    db_file = "WikiSQL/data/test.db"
     
-    out_file = os.path.join(args.output_path, args.checkpoint_time, f"test_out_{args.epoch}.jsonl")
-    model_out_file = os.path.join(args.output_path, args.checkpoint_time, f"test_model_out_{args.epoch}.pkl")
+    in_file = f"data/wiki{args.dataset_type}.jsonl"
+    label_file = f"WikiSQL/data/{args.dataset_type}.jsonl"
+    db_file = f"WikiSQL/data/{args.dataset_type}.db"
+    
+    out_file = os.path.join(args.output_path, args.checkpoint_time, f"test_{args.dataset_type}_{args.epoch}.jsonl")
+    model_out_file = os.path.join(args.output_path, args.checkpoint_time, f"{args.dataset_type}_model_out_{args.epoch}.pkl")
 
     # All Best
     model_path = os.path.join(args.output_path, args.checkpoint_time)
