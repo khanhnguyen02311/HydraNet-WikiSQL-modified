@@ -58,7 +58,7 @@ if __name__ == "__main__":
     label_file = f"WikiSQL/data/{args.dataset_type}.jsonl"
     db_file = f"WikiSQL/data/{args.dataset_type}.db"
     
-    out_file = os.path.join(args.output_path, args.checkpoint_time, f"test_{args.dataset_type}_{args.epoch}.jsonl")
+    out_file = os.path.join(args.output_path, args.checkpoint_time, f"{args.dataset_type}_out_{args.epoch}.jsonl")
     model_out_file = os.path.join(args.output_path, args.checkpoint_time, f"{args.dataset_type}_model_out_{args.epoch}.pkl")
 
     # All Best
